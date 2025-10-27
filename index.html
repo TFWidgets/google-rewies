@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Google Reviews Widget - Бесплатная версия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Google Sans', 'Roboto', 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: #f8f9fa;
+            color: #202124;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 3.2em;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+            background: linear-gradient(135deg, #4285F4, #34A853, #FBBC04, #EA4335);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            color: #5f6368;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e8eaed;
+        }
+        
+        .demo-section h2 {
+            font-size: 1.8em;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #e8f0fe, #f3e8ff);
+            border: 1px solid #4285F4;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            color: #1a73e8;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+            margin: 20px 0;
+            overflow-x: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .code-block:hover {
+            box-shadow: 0 0 20px rgba(66, 133, 244, 0.3);
+        }
+        
+        .highlight {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 Google Reviews Widget</h1>
+        <p>Красивые отзывы Google для вашего сайта. Полностью бесплатно, без API!</p>
+    </div>
+
+    <div class="demo-section">
+        <h2>🍕 Пример: Ресторан</h2>
+        
+        <div class="info-box">
+            <strong>Статический виджет:</strong> Отзывы из configs/demo.json. Полностью бесплатно, красивый Google-дизайн, никаких API ключей!
+        </div>
+        
+        <div class="code-block" onclick="copyCode(this)">
+&lt;script src="<span class="highlight">https://your-domain.pages.dev/embed.js</span>" 
+        data-id="<span class="highlight">demo</span>"&gt;
+&lt;/script&gt;
+        </div>
+        
+        <script src="./embed.js" data-id="demo"></script>
+    </div>
+
+    <div class="demo-section">
+        <h2>⚙️ Встроенный конфиг</h2>
+        
+        <div class="info-box">
+            <strong>Без внешних файлов:</strong> JSON прямо в HTML. Идеально для приватности и кастомизации.
+        </div>
+        
+        <script id="grw-local-config" type="application/json">
+        {
+          "widgetTitle": "Медицинский центр 'Здоровье+'",
+          "widgetDescription": "Отзывы наших пациентов",
+          "businessInfo": {
+            "name": "Медицинский центр 'Здоровье+'",
+            "emoji": "🏥",
+            "address": "ул. Медицинская, 15, Москва",
+            "phone": "+7 (495) 123-45-67",
+            "website": "https://health-plus.ru",
+            "rating": 4.9,
+            "totalReviews": 247
+          },
+          "reviews": [
+            {
+              "author": "Анна Петрова",
+              "rating": 5,
+              "date": "2 недели назад",
+              "text": "Отличный медицинский центр! Профессиональные врачи, современное оборудование.",
+              "isLocalGuide": true
+            },
+            {
+              "author": "Михаил Сидоров",
+              "rating": 5,
+              "date": "1 месяц назад", 
+              "text": "Быстро записался на прием, все четко и по времени. Результатами очень доволен!"
+            }
+          ]
+        }
+        </script>
+        <script src="./embed.js" data-id="local"></script>
+    </div>
+
+    <div class="demo-section" style="background: #1f1f1f;">
+        <h2 style="color: #e8eaed;">🌙 Темная тема</h2>
+        
+        <div class="code-block" onclick="copyCode(this)">
+&lt;script src="<span class="highlight">https://your-domain.pages.dev/embed.js</span>" 
+        data-id="<span class="highlight">demo</span>"
+        data-theme="<span class="highlight">dark</span>"&gt;
+&lt;/script&gt;
+        </div>
+        
+        <script src="./embed.js" data-id="demo" data-theme="dark"></script>
+    </div>
+
+    <script>
+        function copyCode(element) {
+            const text = element.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.boxShadow = '0 0 20px rgba(52, 168, 83, 0.5)';
+                setTimeout(() => {
+                    element.style.boxShadow = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
