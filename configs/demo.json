@@ -1,12 +1,11 @@
-
 {
-  "widgetTitle": "Итальянский ресторан 'Bella Vista'",
-  "widgetDescription": "Отзывы наших гостей о незабываемых вечерах",
+  "widgetTitle": "Italian Restaurant 'Bella Vista'",
+  "widgetDescription": "Reviews from our guests about unforgettable evenings",
   "businessInfo": {
-    "name": "Итальянский ресторан 'Bella Vista'",
+    "name": "Italian Restaurant 'Bella Vista'",
     "emoji": "🍕",
-    "address": "ул. Тверская, 12, Москва",
-    "phone": "+7 (495) 123-45-67",
+    "address": "Václavské nám. 47/47, 110 00 Nové Město",
+    "phone": "+420 777 625 450",
     "website": "https://bella-vista-moscow.ru",
     "rating": 4.7,
     "totalReviews": 1847,
@@ -16,25 +15,25 @@
   "showActions": true,
   "reviews": [
     {
-      "author": "Александра Волкова",
+      "author": "Alexandra Volkova",
       "rating": 5,
-      "date": "1 неделю назад",
-      "text": "Потрясающее место! Паста карбонара просто тает во рту, а тирамису - произведение искусства. Атмосфера уютная, персонал внимательный. Обязательно вернемся!",
+      "date": "1 week ago",
+      "text": "Amazing place! The carbonara pasta just melts in your mouth, and the tiramisu is a true work of art. Cozy atmosphere and attentive staff. We’ll definitely be back!",
       "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
       "isLocalGuide": true
     },
     {
-      "author": "Дмитрий Петров",
+      "author": "Dmitry Petrov",
       "rating": 5,
-      "date": "2 недели назад", 
-      "text": "Отмечали годовщину свадьбы. Все было на высшем уровне: от подачи блюд до обслуживания. Особенно понравилась пицца 'Маргарита' - как в настоящей Италии!",
+      "date": "2 weeks ago",
+      "text": "We celebrated our wedding anniversary here. Everything was top-notch — from food presentation to service. Especially loved the 'Margherita' pizza — just like in real Italy!",
       "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
     },
     {
-      "author": "Мария Сидорова",
+      "author": "Maria Sidorova",
       "rating": 4,
-      "date": "3 недели назад",
-      "text": "Очень вкусная еда и приятная атмосфера. Немного шумновато в выходные, но это не критично. Рекомендую ризотто с грибами!"
+      "date": "3 weeks ago",
+      "text": "Very tasty food and pleasant atmosphere. A bit noisy on weekends, but not a big deal. Highly recommend the mushroom risotto!"
     }
   ]
 }
