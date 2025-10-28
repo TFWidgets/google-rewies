@@ -1,10 +1,3 @@
-/**
- * Cloudflare Worker - Admin Setup API
- * POST /api/admin/setup
- * 
- * Создает или обновляет конфигурацию клиента
- */
-
 export async function onRequestPost(context) {
     const { request, env } = context;
 
