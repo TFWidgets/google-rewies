@@ -105,26 +105,72 @@
 
     async function loadConfig() {
         try {
+            console.log(`[GoogleReviews] Loading config: ${widgetId}`);
             let config;
             
-            if (widgetId === 'local') {
+            // Priority 1: Admin preview from localStorage
+            if (widgetId === 'admin-preview') {
+                const storedConfig = localStorage.getItem('admin-preview-config');
+                if (storedConfig) {
+                    console.log('[GoogleReviews] Using localStorage config');
+                    config = JSON.parse(storedConfig);
+                } else {
+                    throw new Error('Admin preview config not found in localStorage');
+                }
+            }
+            // Priority 2: Local inline config
+            else if (widgetId === 'local') {
                 const localScript = document.querySelector('#grw-local-config');
                 if (localScript) {
                     config = JSON.parse(localScript.textContent);
                 } else {
                     throw new Error('Локальный конфиг не найден');
                 }
-            } else {
-                const configUrl = `./configs/${widgetId}.json?v=${Date.now()}`;
-                const response = await fetch(configUrl);
-                if (!response.ok) throw new Error(`Конфиг не найден: ${widgetId}`);
-                config = await response.json();
+            }
+            // Priority 3: Try API endpoint first
+            else {
+                try {
+                    const baseUrl = getBasePath(script.src);
+                    const apiUrl = `${baseUrl}api/get-config?id=${widgetId}`;
+                    console.log('[GoogleReviews] Trying API:', apiUrl);
+                    const apiResponse = await fetch(apiUrl);
+                    if (apiResponse.ok) {
+                        const apiData = await apiResponse.json();
+                        if (apiData.success && apiData.config) {
+                            console.log('[GoogleReviews] Config loaded from API');
+                            config = apiData.config;
+                        }
+                    }
+                } catch (apiError) {
+                    console.warn('[GoogleReviews] API not available, trying static file:', apiError.message);
+                }
+                
+                // Priority 4: Fallback to static file
+                if (!config) {
+                    const configUrl = `./configs/${widgetId}.json?v=${Date.now()}`;
+                    console.log('[GoogleReviews] Loading static config:', configUrl);
+                    const response = await fetch(configUrl);
+                    if (!response.ok) throw new Error(`Конфиг не найден: ${widgetId}`);
+                    config = await response.json();
+                    console.log('[GoogleReviews] Config loaded from static file');
+                }
             }
             
             renderWidget(config);
         } catch (error) {
             console.warn('[GoogleReviews] Ошибка загрузки:', error);
             showError(error.message);
+        }
+    }
+
+    function getBasePath(src) {
+        if (!src) return './';
+        try {
+            const url = new URL(src, location.href);
+            return url.origin + url.pathname.replace(/\/[^\/]*$/, '/');
+        } catch (error) {
+            console.warn('[GoogleReviews] Ошибка определения basePath:', error);
+            return './';
         }
     }
 
