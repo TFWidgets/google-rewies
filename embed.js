@@ -89,14 +89,40 @@
 
     async function loadReviews() {
         try {
-            const apiUrl = `https://google-reviews-live.pages.dev/api/reviews?id=${clientId}`;
-            console.log(`[GoogleReviewsLive] Fetching reviews for ${clientId}...`);
-            
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            let data;
 
-            if (!response.ok || !data.success) {
-                throw new Error(data.message || data.error || 'Failed to load reviews');
+            // 1. Inline JSON config (data-id="local")
+            if (clientId === 'local') {
+                console.log('[GoogleReviewsLive] Loading from inline config...');
+                const configScript = document.getElementById('grw-local-config');
+                if (!configScript) {
+                    throw new Error('Inline config not found. Add <script id="grw-local-config" type="application/json">');
+                }
+                const config = JSON.parse(configScript.textContent);
+                data = formatStaticConfig(config);
+            }
+            // 2. Static config files (data-id="demo", "alza", etc.)
+            else if (['demo', 'alza'].includes(clientId)) {
+                console.log(`[GoogleReviewsLive] Loading from configs/${clientId}.json...`);
+                const configUrl = `https://google-rewies.pages.dev/configs/${clientId}.json`;
+                const response = await fetch(configUrl);
+                if (!response.ok) {
+                    throw new Error(`Config not found: configs/${clientId}.json`);
+                }
+                const config = await response.json();
+                data = formatStaticConfig(config);
+            }
+            // 3. Live API (data-id="client-xxx")
+            else {
+                console.log(`[GoogleReviewsLive] Fetching live reviews for ${clientId}...`);
+                const apiUrl = `https://google-rewies.pages.dev/api/reviews?id=${clientId}`;
+                const response = await fetch(apiUrl);
+                const apiData = await response.json();
+
+                if (!response.ok || !apiData.success) {
+                    throw new Error(apiData.message || apiData.error || 'Failed to load reviews');
+                }
+                data = apiData;
             }
 
             renderWidget(data);
@@ -106,6 +132,29 @@
             console.error('[GoogleReviewsLive] Error:', error);
             showError(error.message);
         }
+    }
+
+    function formatStaticConfig(config) {
+        // Convert static JSON format to widget format
+        return {
+            success: true,
+            business: {
+                name: config.businessInfo.name,
+                address: config.businessInfo.address,
+                rating: config.businessInfo.rating,
+                totalReviews: config.businessInfo.totalReviews,
+                placeId: config.businessInfo.placeId || 'static'
+            },
+            reviews: config.reviews.map(r => ({
+                author: r.author,
+                rating: r.rating,
+                relativeTime: r.date,
+                text: r.text,
+                profilePhoto: r.profilePhoto,
+                isLocalGuide: r.isLocalGuide
+            })),
+            cached: false
+        };
     }
 
     function showError(message) {
