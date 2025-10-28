@@ -1,0 +1,49 @@
+{
+  "widgetTitle": "Alza.cz",
+  "widgetDescription": "Customer reviews from Google",
+  "businessInfo": {
+    "name": "Alza.cz",
+    "emoji": "🛒",
+    "address": "Jateční 1609/32, 170 00 Praha 7",
+    "phone": "+420 225 371 111",
+    "website": "https://www.alza.cz",
+    "rating": 4.2,
+    "totalReviews": 12500,
+    "googleMapsUrl": "https://www.google.com/maps/place/Alza.cz/@50.1037789,14.4489853,17z/"
+  },
+  "maxReviews": 10,
+  "showActions": true,
+  "reviews": [
+    {
+      "author": "Jan Novák",
+      "rating": 5,
+      "date": "1 týden zpět",
+      "text": "Skvělý e-shop! Rychlé doručení, výborné ceny a velký výběr. Už několik let nakupuji pouze tady.",
+      "isLocalGuide": true
+    },
+    {
+      "author": "Petr Svoboda",
+      "rating": 5,
+      "date": "2 týdny zpět",
+      "text": "Objednal jsem notebook, dorazil druhý den! Perfektní komunikace a balení bylo na výbornou."
+    },
+    {
+      "author": "Marie Dvořáková",
+      "rating": 4,
+      "date": "3 týdny zpět",
+      "text": "Spokojenost. Občas vyšší ceny než konkurence, ale spolehlivost a servis to vyváží. Showroom v Praze je skvělý."
+    },
+    {
+      "author": "Tomáš Procházka",
+      "rating": 5,
+      "date": "1 měsíc zpět",
+      "text": "AlzaBox je geniální vynález! Vyzvedl jsem balík v noci cestou z práce. Super pohodlné!"
+    },
+    {
+      "author": "Lenka Horáková",
+      "rating": 4,
+      "date": "1 měsíc zpět",
+      "text": "Dobrý sortiment, rychlé dodání. Jen reklamační proces by mohl být rychlejší."
+    }
+  ]
+}
