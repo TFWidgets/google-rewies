@@ -1,0 +1,22 @@
+name = "google-reviews-live"
+main = "functions/api/reviews.js"
+compatibility_date = "2024-10-28"
+
+# KV Namespaces
+kv_namespaces = [
+  { binding = "REVIEWS_CONFIGS", id = "YOUR_KV_NAMESPACE_ID_1" },
+  { binding = "REVIEWS_CACHE", id = "YOUR_KV_NAMESPACE_ID_2" }
+]
+
+# Environment Variables (set via Cloudflare Dashboard)
+# GOOGLE_PLACES_API_KEY
+# SHOPIFY_API_KEY (optional)
+# ENCRYPTION_SECRET
+
+[env.production]
+name = "google-reviews-live"
+route = "google-reviews-live.pages.dev/*"
+
+[env.staging]
+name = "google-reviews-live-staging"
+route = "staging.google-reviews-live.pages.dev/*"

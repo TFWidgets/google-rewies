@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Reviews Widget Builder - Admin Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Google Reviews Live - Admin Setup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,836 +13,394 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
             min-height: 100vh;
             padding: 40px 20px;
-            color: #1a202c;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 800px;
             margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.95;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 450px 1fr;
-            gap: 30px;
-            align-items: start;
-        }
-
-        .control-panel {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 20px;
-        }
-
-        .control-panel h2 {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #1a202c;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #374151;
-            font-size: 14px;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #4285F4;
-            box-shadow: 0 0 0 3px rgba(66,133,244,0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .review-list {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .review-item {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .review-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .review-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .review-author {
-            font-weight: 600;
-            font-size: 13px;
-            color: #1a202c;
-            margin-bottom: 2px;
-        }
-
-        .review-rating {
-            color: #FBBC04;
-            font-size: 12px;
-        }
-
-        .remove-btn {
-            background: #fee;
-            color: #dc2626;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .remove-btn:hover {
-            background: #dc2626;
-            color: white;
-        }
-
-        .add-review-btn {
-            width: 100%;
-            padding: 12px;
-            background: #4285F4;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px;
-        }
-
-        .add-review-btn:hover {
-            background: #3367D6;
-            transform: translateY(-1px);
-        }
-
-        .action-buttons {
-            display: grid;
-            gap: 12px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #f3f4f6;
-        }
-
-        .btn {
-            padding: 14px 24px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: #4285F4;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #3367D6;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(66,133,244,0.3);
-        }
-
-        .btn-github {
-            background: #34A853;
-            color: white;
-        }
-
-        .btn-github:hover {
-            background: #2d8e47;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(52,168,83,0.3);
-        }
-
-        .preview-panel {
             background: white;
             border-radius: 24px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            min-height: 600px;
         }
 
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #202124;
         }
 
-        .preview-header h2 {
-            font-size: 1.75em;
-            font-weight: 700;
-            color: #1a202c;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .reload-btn {
-            background: #f3f4f6;
-            color: #374151;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .reload-btn:hover {
-            background: #e5e7eb;
-            transform: translateY(-1px);
-        }
-
-        .embed-code-section {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-
-        .embed-code-section h3 {
+        .subtitle {
+            color: #5f6368;
+            margin-bottom: 40px;
             font-size: 1.1em;
+        }
+
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #4285F4;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .step h3 {
+            color: #4285F4;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
             font-weight: 600;
-            margin-bottom: 12px;
-            color: #374151;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4285F4;
+        }
+
+        .helper-text {
+            font-size: 13px;
+            color: #5f6368;
+            margin-top: 6px;
+        }
+
+        .helper-text a {
+            color: #4285F4;
+            text-decoration: none;
+        }
+
+        .helper-text a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #3367D6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66,133,244,0.3);
+        }
+
+        .btn:disabled {
+            background: #e8eaed;
+            color: #9aa0a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-box {
+            background: #e6f4ea;
+            border: 2px solid #34A853;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .success-box.show {
+            display: block;
+        }
+
+        .success-box h3 {
+            color: #34A853;
+            margin-bottom: 15px;
         }
 
         .code-box {
-            background: #1f2937;
-            color: #10b981;
+            background: #2d3748;
+            color: #e2e8f0;
             padding: 16px;
             border-radius: 8px;
-            font-family: 'Monaco', 'Consolas', monospace;
+            font-family: 'Monaco', monospace;
             font-size: 13px;
             overflow-x: auto;
-            white-space: pre-wrap;
+            margin: 15px 0;
             word-break: break-all;
         }
 
         .copy-btn {
-            width: 100%;
-            padding: 10px;
-            background: #4285F4;
+            background: #34A853;
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 13px;
             cursor: pointer;
             margin-top: 10px;
-            transition: all 0.2s;
         }
 
         .copy-btn:hover {
-            background: #3367D6;
+            background: #2d8e47;
         }
 
-        .message {
-            padding: 16px;
+        .error-box {
+            background: #fce8e6;
+            border: 2px solid #d93025;
             border-radius: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .message.success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .message.error {
-            background: #fee;
-            color: #991b1b;
-        }
-
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .control-panel {
-                position: static;
-            }
-        }
-
-        /* Review Form Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
+            margin-top: 20px;
+            color: #d93025;
+            display: none;
         }
 
-        .modal.active {
-            display: flex;
+        .error-box.show {
+            display: block;
         }
 
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .info-box {
+            background: #e8f0fe;
+            border-left: 4px solid #4285F4;
+            padding: 16px;
             margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1a73e8;
         }
 
-        .modal-header h3 {
-            font-size: 1.3em;
-            font-weight: 700;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #6b7280;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .close-modal:hover {
-            background: #f3f4f6;
-        }
-
-        .rating-input {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .star-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            transition: all 0.2s;
-            padding: 0;
-        }
-
-        .star-btn.active {
-            color: #FBBC04;
-        }
-
-        .star-btn.inactive {
-            color: #e5e7eb;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
+        .subscription-badge {
+            display: inline-block;
+            background: #34A853;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>⭐ Google Reviews Widget Builder</h1>
-            <p>Создайте красивый виджет отзывов Google для вашего сайта</p>
+        <h1>🌟 Google Reviews Live</h1>
+        <p class="subtitle">Setup your widget in 3 simple steps</p>
+
+        <!-- Step 1: API Key -->
+        <div class="step">
+            <h3>Step 1: Enter Your API Key</h3>
+            <div class="info-box">
+                💡 Your API key was sent to your email after purchase at <strong>tf-widgets.com</strong>
+            </div>
+            <div class="form-group">
+                <label>API Key *</label>
+                <input type="text" id="apiKey" placeholder="Enter your API key from tf-widgets.com">
+                <div class="helper-text">
+                    Don't have an API key? <a href="https://tf-widgets.com/products/google-reviews-live" target="_blank">Purchase here</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email (optional)</label>
+                <input type="email" id="email" placeholder="your@email.com">
+                <div class="helper-text">For notifications and support</div>
+            </div>
         </div>
 
-        <div class="main-grid">
-            <!-- Control Panel -->
-            <div class="control-panel">
-                <h2>⚙️ Настройки виджета</h2>
-
-                <!-- Business Info -->
-                <div class="form-group">
-                    <label>Название бизнеса</label>
-                    <input type="text" id="businessName" placeholder="Restaurant 'Bella Vista'" value="Italian Restaurant 'Bella Vista'">
+        <!-- Step 2: Google Place ID -->
+        <div class="step">
+            <h3>Step 2: Find Your Google Place ID</h3>
+            <div class="info-box">
+                📍 Your Place ID identifies your business on Google Maps
+            </div>
+            <div class="form-group">
+                <label>Google Place ID *</label>
+                <input type="text" id="placeId" placeholder="ChIJ...">
+                <div class="helper-text">
+                    Find your Place ID: <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" target="_blank">Google Place ID Finder</a>
+                    <br>Or search your business on Google Maps, click "Share", the Place ID is in the URL
                 </div>
-
-                <div class="form-group">
-                    <label>Описание виджета</label>
-                    <textarea id="widgetDescription" placeholder="Reviews from our guests">Reviews from our guests about unforgettable evenings</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Emoji (иконка бизнеса)</label>
-                    <input type="text" id="emoji" placeholder="🍕" value="🍕" maxlength="2">
-                </div>
-
-                <div class="form-group">
-                    <label>Адрес</label>
-                    <input type="text" id="address" placeholder="Václavské nám. 47/47, 110 00 Nové Město" value="Václavské nám. 47/47, 110 00 Nové Město">
-                </div>
-
-                <div class="form-group">
-                    <label>Телефон</label>
-                    <input type="text" id="phone" placeholder="+420 777 625 450" value="+420 777 625 450">
-                </div>
-
-                <div class="form-group">
-                    <label>Веб-сайт</label>
-                    <input type="text" id="website" placeholder="https://example.com" value="https://bella-vista-moscow.ru">
-                </div>
-
-                <!-- Rating Stats -->
-                <div class="form-group">
-                    <label>Статистика рейтинга</label>
-                    <div class="stats-grid">
-                        <input type="number" id="rating" placeholder="Рейтинг" value="4.7" step="0.1" min="0" max="5">
-                        <input type="number" id="totalReviews" placeholder="Всего отзывов" value="1847" min="0">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Ссылка на Google Maps</label>
-                    <input type="text" id="googleMapsUrl" placeholder="https://goo.gl/maps/..." value="https://goo.gl/maps/restaurant-example">
-                </div>
-
-                <div class="form-group">
-                    <label>Количество отзывов для отображения</label>
-                    <input type="number" id="maxReviews" min="1" max="12" value="6">
-                </div>
-
-                <!-- Reviews List -->
-                <div class="form-group">
-                    <label>📝 Отзывы для отображения</label>
-                    <div class="review-list" id="reviewList">
-                        <!-- Reviews will be added here -->
-                    </div>
-                    <button class="add-review-btn" onclick="openReviewModal()">+ Добавить отзыв</button>
-                </div>
-
-                <!-- Config ID -->
-                <div class="form-group">
-                    <label>ID конфигурации (для сохранения)</label>
-                    <input type="text" id="configId" placeholder="my-business" value="demo">
-                    <small style="color: #6b7280; font-size: 12px; margin-top: 4px; display: block;">Используйте только буквы, цифры, дефисы и подчеркивания</small>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="updatePreview()">🔄 Обновить превью</button>
-                    <button class="btn btn-github" onclick="saveToGitHub()">💾 Сохранить в GitHub</button>
-                </div>
-
-                <div id="message"></div>
             </div>
 
-            <!-- Preview Panel -->
-            <div class="preview-panel">
-                <div class="preview-header">
-                    <h2>👁️ Live Preview</h2>
-                    <button class="reload-btn" onclick="updatePreview()">⟳ Reload</button>
-                </div>
-
-                <div id="widgetPreview"></div>
-
-                <div class="embed-code-section">
-                    <h3>📦 Embed Code</h3>
-                    <div class="code-box" id="embedCode">&lt;script src="https://google-reviews.pages.dev/embed.js" data-id="demo"&gt;&lt;/script&gt;</div>
-                    <button class="copy-btn" onclick="copyEmbedCode()">📋 Copy Code</button>
-                </div>
+            <div class="form-group">
+                <label>Business Name (optional)</label>
+                <input type="text" id="businessName" placeholder="My Restaurant">
+                <div class="helper-text">Display name for your business</div>
             </div>
         </div>
-    </div>
 
-    <!-- Add Review Modal -->
-    <div class="modal" id="reviewModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Добавить отзыв</h3>
-                <button class="close-modal" onclick="closeReviewModal()">×</button>
-            </div>
+        <!-- Step 3: Generate Widget -->
+        <div class="step">
+            <h3>Step 3: Generate Your Widget</h3>
+            <button class="btn" id="generateBtn" onclick="generateWidget()">
+                🚀 Generate Widget Code
+            </button>
+        </div>
 
-            <div class="form-group">
-                <label>Имя автора</label>
-                <input type="text" id="reviewAuthor" placeholder="Alexandra Volkova">
-            </div>
+        <!-- Success Message -->
+        <div class="success-box" id="successBox">
+            <h3>✅ Success! Your widget is ready</h3>
+            <p><strong>Client ID:</strong> <span id="clientIdDisplay"></span></p>
+            <p><strong>Subscription:</strong> <span id="subscriptionPlan"></span></p>
+            
+            <h4 style="margin-top: 20px; color: #202124;">Embed Code:</h4>
+            <div class="code-box" id="embedCodeBox"></div>
+            <button class="copy-btn" onclick="copyEmbedCode()">📋 Copy Code</button>
 
-            <div class="form-group">
-                <label>Рейтинг</label>
-                <div class="rating-input" id="ratingInput">
-                    <button class="star-btn" data-rating="1" onclick="setRating(1)">★</button>
-                    <button class="star-btn" data-rating="2" onclick="setRating(2)">★</button>
-                    <button class="star-btn" data-rating="3" onclick="setRating(3)">★</button>
-                    <button class="star-btn" data-rating="4" onclick="setRating(4)">★</button>
-                    <button class="star-btn" data-rating="5" onclick="setRating(5)">★</button>
-                </div>
-            </div>
+            <p style="margin-top: 20px; font-size: 14px; color: #5f6368;">
+                Paste this code on your website where you want the reviews to appear.
+            </p>
+        </div>
 
-            <div class="form-group">
-                <label>Дата отзыва</label>
-                <input type="text" id="reviewDate" placeholder="1 week ago" value="1 week ago">
-            </div>
+        <!-- Error Message -->
+        <div class="error-box" id="errorBox">
+            <strong>Error:</strong> <span id="errorMessage"></span>
+        </div>
 
-            <div class="form-group">
-                <label>Текст отзыва</label>
-                <textarea id="reviewText" placeholder="Amazing place! The food is delicious..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>URL аватара (опционально)</label>
-                <input type="text" id="reviewAvatar" placeholder="https://images.unsplash.com/...">
-            </div>
-
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="isLocalGuide">
-                    <label for="isLocalGuide" style="margin-bottom: 0;">Local Guide</label>
-                </div>
-            </div>
-
-            <button class="btn btn-primary" onclick="addReview()" style="width: 100%; margin-top: 20px;">Добавить</button>
+        <!-- Preview Section -->
+        <div id="previewSection" style="margin-top: 40px; display: none;">
+            <h2 style="margin-bottom: 20px;">Preview:</h2>
+            <div id="widgetPreview"></div>
         </div>
     </div>
 
     <script>
-        let reviews = [
-            {
-                author: "Alexandra Volkova",
-                rating: 5,
-                date: "1 week ago",
-                text: "Amazing place! The carbonara pasta just melts in your mouth, and the tiramisu is a true work of art. Cozy atmosphere and attentive staff. We'll definitely be back!",
-                avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
-                isLocalGuide: true
-            },
-            {
-                author: "Dmitry Petrov",
-                rating: 5,
-                date: "2 weeks ago",
-                text: "We celebrated our wedding anniversary here. Everything was top-notch — from food presentation to service. Especially loved the 'Margherita' pizza — just like in real Italy!",
-                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                author: "Maria Sidorova",
-                rating: 4,
-                date: "3 weeks ago",
-                text: "Very tasty food and pleasant atmosphere. A bit noisy on weekends, but not a big deal. Highly recommend the mushroom risotto!"
-            }
-        ];
+        let generatedClientId = '';
+        let generatedEmbedCode = '';
 
-        let currentRating = 5;
-        let editingIndex = -1;
+        async function generateWidget() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const placeId = document.getElementById('placeId').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const businessName = document.getElementById('businessName').value.trim();
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            updateReviewList();
-            updatePreview();
-            updateRatingStars();
-        });
+            // Hide previous messages
+            document.getElementById('successBox').classList.remove('show');
+            document.getElementById('errorBox').classList.remove('show');
 
-        function generateConfig() {
-            return {
-                widgetTitle: document.getElementById('businessName').value,
-                widgetDescription: document.getElementById('widgetDescription').value,
-                businessInfo: {
-                    name: document.getElementById('businessName').value,
-                    emoji: document.getElementById('emoji').value,
-                    address: document.getElementById('address').value,
-                    phone: document.getElementById('phone').value,
-                    website: document.getElementById('website').value,
-                    rating: parseFloat(document.getElementById('rating').value) || 0,
-                    totalReviews: parseInt(document.getElementById('totalReviews').value) || 0,
-                    googleMapsUrl: document.getElementById('googleMapsUrl').value
-                },
-                maxReviews: parseInt(document.getElementById('maxReviews').value) || 6,
-                showActions: true,
-                reviews: reviews
-            };
-        }
-
-        function updatePreview() {
-            console.log('[Admin] Updating preview...');
-            
-            const config = generateConfig();
-            const configId = document.getElementById('configId').value || 'admin-preview';
-            
-            // Save to localStorage for preview
-            localStorage.setItem('admin-preview-config', JSON.stringify(config));
-            
-            // Update embed code
-            const embedCode = '<script src="https://google-reviews.pages.dev/embed.js" data-id="' + configId + '"><\/script>';
-            document.getElementById('embedCode').textContent = embedCode;
-            
-            // Clear previous widget
-            const preview = document.getElementById('widgetPreview');
-            preview.innerHTML = '';
-            
-            // Remove old script if exists
-            const oldScript = document.getElementById('preview-widget-script');
-            if (oldScript) {
-                oldScript.remove();
-            }
-            
-            // Add new script with slight delay for cleanup
-            setTimeout(() => {
-                const script = document.createElement('script');
-                script.id = 'preview-widget-script';
-                script.src = './embed.js?t=' + Date.now();
-                script.setAttribute('data-id', 'admin-preview');
-                preview.appendChild(script);
-                console.log('[Admin] Preview script loaded');
-            }, 100);
-        }
-
-        async function saveToGitHub() {
-            const configId = document.getElementById('configId').value;
-            if (!configId || configId.trim() === '') {
-                showMessage('Пожалуйста, укажите ID конфигурации!', 'error');
+            // Validation
+            if (!apiKey) {
+                showError('Please enter your API key');
                 return;
             }
 
-            const config = generateConfig();
-            
+            if (!placeId) {
+                showError('Please enter your Google Place ID');
+                return;
+            }
+
+            if (!placeId.startsWith('ChIJ')) {
+                showError('Invalid Place ID format. Place IDs start with "ChIJ"');
+                return;
+            }
+
+            // Disable button
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Generating...';
+
             try {
-                const response = await fetch('/api/save-to-github', {
+                // Call API
+                const response = await fetch('/api/admin/setup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        configId: configId,
-                        config: config
+                        apiKey: apiKey,
+                        email: email,
+                        placeId: placeId,
+                        businessName: businessName,
+                        config: {
+                            maxReviews: 10,
+                            showPhotos: true,
+                            theme: 'light',
+                            language: 'en'
+                        }
                     })
                 });
 
-                const result = await response.json();
-                
-                if (result.success) {
-                    showMessage('✅ Успешно сохранено! Config ID: ' + configId, 'success');
-                    console.log('[Admin] Saved to GitHub:', result);
-                } else {
-                    showMessage('❌ ' + (result.error || result.message || 'Ошибка сохранения'), 'error');
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || data.error || 'Failed to generate widget');
                 }
+
+                // Success!
+                generatedClientId = data.clientId;
+                generatedEmbedCode = data.embedCode;
+
+                document.getElementById('clientIdDisplay').textContent = data.clientId;
+                document.getElementById('subscriptionPlan').innerHTML = 
+                    `<span class="subscription-badge">${data.subscription.plan.toUpperCase()}</span> 
+                     (expires: ${new Date(data.subscription.expiresAt).toLocaleDateString()})`;
+                document.getElementById('embedCodeBox').textContent = data.embedCode;
+                document.getElementById('successBox').classList.add('show');
+
+                // Show preview
+                showPreview(data.clientId);
+
             } catch (error) {
-                console.error('[Admin] Error:', error);
-                showMessage('❌ Ошибка: ' + error.message, 'error');
+                console.error('Error:', error);
+                showError(error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🚀 Generate Widget Code';
             }
         }
 
-        function showMessage(text, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = 'message ' + type;
-            messageDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorBox').classList.add('show');
         }
 
         function copyEmbedCode() {
-            const code = document.getElementById('embedCode').textContent;
-            navigator.clipboard.writeText(code).then(() => {
+            navigator.clipboard.writeText(generatedEmbedCode).then(() => {
                 const btn = event.target;
                 const originalText = btn.textContent;
-                btn.textContent = '✅ Скопировано!';
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#34A853';
                 setTimeout(() => {
                     btn.textContent = originalText;
+                    btn.style.background = '';
                 }, 2000);
             });
         }
 
-        // Review Management
-        function updateReviewList() {
-            const list = document.getElementById('reviewList');
-            if (reviews.length === 0) {
-                list.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 20px;">Нет отзывов. Добавьте первый!</div>';
-                return;
-            }
-
-            list.innerHTML = reviews.map((review, index) => {
-                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-                return '<div class="review-item">' +
-                    '<div class="review-info">' +
-                    '<div class="review-author">' + escapeHtml(review.author) + (review.isLocalGuide ? ' <span style="color: #1a73e8; font-size: 11px;">🎖️ Guide</span>' : '') + '</div>' +
-                    '<div class="review-rating">' + stars + '</div>' +
-                    '</div>' +
-                    '<button class="remove-btn" onclick="removeReview(' + index + ')">Удалить</button>' +
-                    '</div>';
-            }).join('');
-        }
-
-        function openReviewModal() {
-            document.getElementById('reviewModal').classList.add('active');
-            editingIndex = -1;
-            clearReviewForm();
-        }
-
-        function closeReviewModal() {
-            document.getElementById('reviewModal').classList.remove('active');
-        }
-
-        function clearReviewForm() {
-            document.getElementById('reviewAuthor').value = '';
-            document.getElementById('reviewDate').value = '1 week ago';
-            document.getElementById('reviewText').value = '';
-            document.getElementById('reviewAvatar').value = '';
-            document.getElementById('isLocalGuide').checked = false;
-            setRating(5);
-        }
-
-        function setRating(rating) {
-            currentRating = rating;
-            updateRatingStars();
-        }
-
-        function updateRatingStars() {
-            const stars = document.querySelectorAll('.star-btn');
-            stars.forEach((star, index) => {
-                if (index < currentRating) {
-                    star.classList.add('active');
-                    star.classList.remove('inactive');
-                } else {
-                    star.classList.remove('active');
-                    star.classList.add('inactive');
-                }
-            });
-        }
-
-        function addReview() {
-            const author = document.getElementById('reviewAuthor').value.trim();
-            const text = document.getElementById('reviewText').value.trim();
+        function showPreview(clientId) {
+            const previewSection = document.getElementById('previewSection');
+            const widgetPreview = document.getElementById('widgetPreview');
             
-            if (!author || !text) {
-                alert('Пожалуйста, заполните имя автора и текст отзыва!');
-                return;
-            }
-
-            const review = {
-                author: author,
-                rating: currentRating,
-                date: document.getElementById('reviewDate').value || '1 week ago',
-                text: text,
-                avatar: document.getElementById('reviewAvatar').value || undefined,
-                isLocalGuide: document.getElementById('isLocalGuide').checked || undefined
-            };
-
-            reviews.push(review);
-            updateReviewList();
-            closeReviewModal();
-            updatePreview();
+            previewSection.style.display = 'block';
+            widgetPreview.innerHTML = '';
+            
+            const script = document.createElement('script');
+            script.src = './embed.js';
+            script.setAttribute('data-id', clientId);
+            widgetPreview.appendChild(script);
         }
-
-        function removeReview(index) {
-            if (confirm('Удалить этот отзыв?')) {
-                reviews.splice(index, 1);
-                updateReviewList();
-                updatePreview();
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Close modal on outside click
-        document.getElementById('reviewModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeReviewModal();
-            }
-        });
     </script>
 </body>
 </html>
