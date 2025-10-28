@@ -1,14 +1,3 @@
-/**
- * Cloudflare Worker - Google Places Reviews API
- * GET /api/reviews?id=client-123
- * 
- * Features:
- * - Загружает реальные отзывы из Google Places API
- * - Кеширует в Cloudflare KV (TTL: 24 часа)
- * - Проверяет подписку клиента
- * - Rate limiting
- */
-
 export async function onRequestGet(context) {
     const { request, env } = context;
     const url = new URL(request.url);
